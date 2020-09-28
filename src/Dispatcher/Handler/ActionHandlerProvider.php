@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\dispatcher\listener;
+namespace Evento\Dispatcher\Handler;
 
-use rssBot\models\action\action\ActionInterface;
+use Evento\action\ActionInterface;
 
-final class ActionListenerProvider implements ActionListenerProviderInterface
+final class ActionHandlerProvider implements ActionHandlerProviderInterface
 {
     private array $resolved = [];
     private array $listeners;
-    private ListenerFactory $factory;
+    private HandlerFactory $factory;
 
-    public function __construct(array $listeners, ListenerFactory $factory)
+    public function __construct(array $listeners, HandlerFactory $factory)
     {
         $this->listeners = $listeners;
         $this->factory = $factory;
@@ -21,7 +21,7 @@ final class ActionListenerProvider implements ActionListenerProviderInterface
     /**
      * @inheritDoc
      */
-    public function getListenersForAction(ActionInterface $action): iterable
+    public function getHandlersForAction(ActionInterface $action): iterable
     {
         yield from $this->getForEvents(get_class($action));
         yield from $this->getForEvents(...array_values(class_parents($action)));
@@ -31,7 +31,7 @@ final class ActionListenerProvider implements ActionListenerProviderInterface
     /**
      * @param string ...$eventClassNames
      *
-     * @return \rssBot\models\action\action\ActionInterface[]
+     * @return ActionInterface[]
      */
     private function getForEvents(string ...$eventClassNames): iterable
     {

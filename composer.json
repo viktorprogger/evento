@@ -13,7 +13,8 @@
 
         "yiisoft/yii-queue": "3.x-dev",
         "yiisoft/di": "3.0.x-dev",
-        "yiisoft/factory": "3.0.x-dev"
+        "yiisoft/factory": "3.0.x-dev",
+        "yiisoft/validator": "3.0.x-dev"
     },
     "license": "MIT",
     "authors": [
@@ -26,7 +27,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "\\Evento": "src"
+            "\\Evento\\": "src"
         }
     }
 }

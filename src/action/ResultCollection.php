@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\action;
+namespace Evento\action;
 
 class ResultCollection implements ResultCollectionInterface
 {

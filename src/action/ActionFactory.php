@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\action;
+namespace Evento\action;
 
 use RuntimeException;
 use Yiisoft\Factory\Factory;
@@ -22,7 +22,9 @@ class ActionFactory implements ActionFactoryInterface
     {
         $definition = $message->getPayloadData()['action'] ?? null;
         if (!$this->factory->has($definition)) {
-            throw new RuntimeException('Deferred listener message must provide an action id registered in the factory.');
+            throw new RuntimeException(
+                'Deferred listener message must provide an action id registered in the factory.'
+            );
         }
 
         return $this->factory->create($definition);

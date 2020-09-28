@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\dispatcher;
+namespace Evento\Dispatcher;
 
-use rssBot\models\action\action\ActionInterface;
+use Evento\action\ActionInterface;
 
 interface ActionDispatcherInterface
 {

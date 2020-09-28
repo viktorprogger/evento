@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\dispatcher\listener;
+namespace Evento\Dispatcher\Handler;
 
-use rssBot\models\action\action\ActionInterface;
+use Evento\action\ActionInterface;
 use RuntimeException;
+use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Factory\Factory;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Validator\Result as ValidatorResult;
 use Yiisoft\Validator\Rule;
 use Yiisoft\Validator\Rules;
 
-final class ListenerFactory
+final class HandlerFactory
 {
     /**
      * @var Factory
@@ -29,9 +30,9 @@ final class ListenerFactory
         $this->injector = $injector;
     }
 
-    public function create($listener): ListenerInterface
+    public function create($listener): HandlerInterface
     {
-        if ($listener instanceof ListenerInterface) {
+        if ($listener instanceof HandlerInterface) {
             return $listener;
         }
 
@@ -45,7 +46,7 @@ final class ListenerFactory
 
         if ($result instanceof ActionInterface) {
             $definition = [
-                '__class' => Listener::class,
+                '__class' => SimpleHandler::class,
                 '__construct()' => [$result],
             ];
             $result = $this->factory->create($definition);
@@ -59,7 +60,7 @@ final class ListenerFactory
      *
      * @return array
      *
-     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     * @throws InvalidConfigException
      */
     private function createArrayDefinition(array $listener): array
     {
@@ -80,7 +81,9 @@ final class ListenerFactory
 
     private function createValidator($conditions): ?Rules
     {
-        $exception = new RuntimeException('Action listener conditions must be either a ' . Rules::class . ' instance or an array of callables and/or ' . Rule::class . ' instances');
+        $exception = new RuntimeException(
+            'Action listener conditions must be either a ' . Rules::class . ' instance or an array of callables and/or ' . Rule::class . ' instances'
+        );
 
         if ($conditions instanceof Rules) {
             return $conditions;

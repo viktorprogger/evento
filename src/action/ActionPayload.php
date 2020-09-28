@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\action;
+namespace Evento\action;
 
 use Yiisoft\Yii\Queue\Payload\PayloadInterface;
 
 class ActionPayload implements PayloadInterface
 {
-    public const NAME = 'yii-resender'; // TODO fill after the package name invention
+    public const NAME = 'viktorprogger/evento';
     private string $action;
     /**
      * @var mixed $data Data to be passed to the run method of the action

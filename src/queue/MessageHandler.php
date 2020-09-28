@@ -2,22 +2,15 @@
 
 declare(strict_types=1);
 
-namespace rssBot\models\action\queue;
+namespace Evento\queue;
 
-
-use rssBot\models\action\action\ActionFactoryInterface;
-use rssBot\models\action\dispatcher\ActionDispatcher;
+use Evento\action\ActionFactoryInterface;
+use Evento\Dispatcher\ActionDispatcher;
 use Yiisoft\Yii\Queue\Message\MessageInterface;
 
 class MessageHandler
 {
-    /**
-     * @var \rssBot\models\action\action\ActionFactoryInterface
-     */
     private ActionFactoryInterface $factory;
-    /**
-     * @var ActionDispatcher
-     */
     private ActionDispatcher $dispatcher;
 
     public function __construct(ActionFactoryInterface $factory, ActionDispatcher $dispatcher)
