@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Evento\Dispatcher;
 
-use Evento\action\ActionInterface;
+use Evento\Action\ActionInterface;
 
 interface ActionDispatcherInterface
 {

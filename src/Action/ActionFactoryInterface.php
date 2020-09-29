@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Evento\action;
+namespace Evento\Action;
 
 use Yiisoft\Yii\Queue\Message\MessageInterface;
 use Yiisoft\Yii\Queue\Payload\PayloadInterface;

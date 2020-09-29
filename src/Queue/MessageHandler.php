@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Evento\queue;
+namespace Evento\Queue;
 
-use Evento\action\ActionFactoryInterface;
+use Evento\Action\ActionFactoryInterface;
 use Evento\Dispatcher\ActionDispatcher;
 use Yiisoft\Yii\Queue\Message\MessageInterface;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Evento\Dispatcher\Handler;
 
-use Evento\action\ActionInterface;
+use Evento\Action\ActionInterface;
 use Yiisoft\Validator\Rules;
 
 class SimpleHandler extends AbstractHandler

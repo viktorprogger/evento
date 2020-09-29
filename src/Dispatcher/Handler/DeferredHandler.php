@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Evento\Dispatcher\Handler;
 
-use Evento\action\ActionFactory;
-use Evento\action\ActionFactoryInterface;
-use Evento\action\ActionInterface;
+use Evento\Action\ActionFactory;
+use Evento\Action\ActionFactoryInterface;
+use Evento\Action\ActionInterface;
 use Yiisoft\Validator\Rules;
 use Yiisoft\Yii\Queue\Queue;
 
