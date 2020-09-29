@@ -26,7 +26,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "\\Evento\\": "src"
+            "Evento\\": "src"
         }
     },
     "require-dev": {
