@@ -9,12 +9,12 @@ use Evento\Action\ActionInterface;
 final class ActionHandlerProvider implements ActionHandlerProviderInterface
 {
     private array $resolved = [];
-    private array $listeners;
+    private array $handlers;
     private HandlerFactory $factory;
 
-    public function __construct(array $listeners, HandlerFactory $factory)
+    public function __construct(array $handlers, HandlerFactory $factory)
     {
-        $this->listeners = $listeners;
+        $this->handlers = $handlers;
         $this->factory = $factory;
     }
 
@@ -48,8 +48,8 @@ final class ActionHandlerProvider implements ActionHandlerProviderInterface
     {
         $result = [];
 
-        foreach ($this->listeners[$eventClassName] ?? [] as $listener) {
-            $result[] = $this->factory->create($listener['action']);
+        foreach ($this->handlers[$eventClassName] ?? [] as $listener) {
+            $result[] = $this->factory->create($listener);
         }
 
         return $result;

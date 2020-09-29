@@ -15,14 +15,9 @@ use Yiisoft\Validator\Rules;
 
 final class HandlerFactory
 {
-    /**
-     * @var Factory
-     */
     private Factory $factory;
-    /**
-     * @var Injector
-     */
     private Injector $injector;
+    private bool $deferredDefault = false;
 
     public function __construct(Factory $factory, Injector $injector)
     {
@@ -30,23 +25,31 @@ final class HandlerFactory
         $this->injector = $injector;
     }
 
-    public function create($listener): HandlerInterface
+    public function withDeferredDefault(bool $default = true): self
     {
-        if ($listener instanceof HandlerInterface) {
-            return $listener;
+        $that = clone $this;
+        $that->deferredDefault = $default;
+
+        return $that;
+    }
+
+    public function create($handler): HandlerInterface
+    {
+        if ($handler instanceof HandlerInterface) {
+            return $handler;
         }
 
-        if (is_array($listener)) {
-            $definition = $this->createArrayDefinition($listener);
+        if (is_array($handler)) {
+            $definition = $this->createArrayDefinition($handler);
         } else {
-            $definition = $listener;
+            $definition = $handler;
         }
 
         $result = $this->factory->create($definition);
 
         if ($result instanceof ActionInterface) {
             $definition = [
-                '__class' => SimpleHandler::class,
+                '__class' => $this->getDefaultHandler(),
                 '__construct()' => [$result],
             ];
             $result = $this->factory->create($definition);
@@ -56,24 +59,26 @@ final class HandlerFactory
     }
 
     /**
-     * @param array $listener
+     * @param array $handler
      *
      * @return array
      *
      * @throws InvalidConfigException
      */
-    private function createArrayDefinition(array $listener): array
+    private function createArrayDefinition(array $handler): array
     {
-        if (!isset($listener['action'])) {
+        if (!isset($handler['action'])) {
             throw new RuntimeException('Action listener array configuration must contain "action" key');
         }
 
-        $definition = ['action' => $this->factory->create($listener['action'])];
-        if (isset($listener['conditions'])) {
-            $definition['validator'] = $this->createValidator($listener['conditions']);
+        $definition = ['action' => $this->factory->create($handler['action'])];
+        if (isset($handler['conditions'])) {
+            $definition['validator'] = $this->createValidator($handler['conditions']);
         }
-        if (isset($listener['synchronous'])) {
-            $definition['synchronous'] = $listener['synchronous'];
+        if (isset($handler['__class'])) {
+            $definition['__class'] = $handler['__class'];
+        } else {
+            $definition['__class'] = SimpleHandler::class;
         }
 
         return $definition;
@@ -82,7 +87,8 @@ final class HandlerFactory
     private function createValidator($conditions): ?Rules
     {
         $exception = new RuntimeException(
-            'Action listener conditions must be either a ' . Rules::class . ' instance or an array of callables and/or ' . Rule::class . ' instances'
+            'Action listener conditions must be either a ' . Rules::class
+                . ' instance or an array of callables and/or ' . Rule::class . ' instances'
         );
 
         if ($conditions instanceof Rules) {
@@ -121,5 +127,10 @@ final class HandlerFactory
         }
 
         return new Rules($rules);
+    }
+
+    private function getDefaultHandler(): string
+    {
+        return $this->deferredDefault ? DeferredHandler::class : SimpleHandler::class;
     }
 }

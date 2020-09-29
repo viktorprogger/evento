@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Evento\Queue;
 
 use Evento\Action\ActionFactoryInterface;
-use Evento\Dispatcher\ActionDispatcher;
+use Evento\Dispatcher\ActionDispatcherInterface;
 use Yiisoft\Yii\Queue\Message\MessageInterface;
 
 class MessageHandler
 {
     private ActionFactoryInterface $factory;
-    private ActionDispatcher $dispatcher;
+    private ActionDispatcherInterface $dispatcher;
 
-    public function __construct(ActionFactoryInterface $factory, ActionDispatcher $dispatcher)
+    public function __construct(ActionFactoryInterface $factory, ActionDispatcherInterface $dispatcher)
     {
         $this->factory = $factory;
         $this->dispatcher = $dispatcher;
