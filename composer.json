@@ -38,8 +38,7 @@
         "config-plugin": {
             "common": "config/common.php",
             "params": "config/params.php",
-            "actions": "config/actions.php",
-            "events-console": "config/events-console.php"
+            "actions": "config/actions.php"
         }
     }
 }
