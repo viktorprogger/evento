@@ -28,7 +28,7 @@ class ActionFactory implements ActionFactoryInterface
     {
         $definition = [
             '__class' => ActionPayload::class,
-            '__construct()' => [$action, $result],
+            '__construct()' => [get_class($action), $result],
         ];
 
         return $this->factory->create($definition);
