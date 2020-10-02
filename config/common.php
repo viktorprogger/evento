@@ -14,5 +14,5 @@ return [
     ActionFactoryInterface::class => ActionFactory::class,
     ActionDispatcherInterface::class => ActionDispatcher::class,
     ActionHandlerProviderInterface::class => ActionHandlerProvider::class,
-    ActionHandlerProvider::class => ['__construct()' => [Builder::require('assets')]],
+    ActionHandlerProvider::class => ['__construct()' => [Builder::require('actions')]],
 ];
