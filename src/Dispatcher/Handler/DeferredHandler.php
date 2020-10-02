@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Evento\Dispatcher\Handler;
 
-use Evento\Action\ActionFactory;
 use Evento\Action\ActionFactoryInterface;
 use Evento\Action\ActionInterface;
 use Yiisoft\Validator\Rules;
@@ -12,7 +11,6 @@ use Yiisoft\Yii\Queue\Queue;
 
 class DeferredHandler extends AbstractHandler
 {
-    protected bool $synchronous;
     protected ActionInterface $action;
     private Queue $queue;
     private ActionFactoryInterface $factory;

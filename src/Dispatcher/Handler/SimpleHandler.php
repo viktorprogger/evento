@@ -10,7 +10,6 @@ use Yiisoft\Validator\Rules;
 
 class SimpleHandler extends AbstractHandler
 {
-    protected bool $synchronous;
     protected ActionInterface $action;
     /**
      * @var ActionDispatcherInterface
