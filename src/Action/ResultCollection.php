@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Evento\Action;
 
+use IteratorIterator;
+use Traversable;
+
 class ResultCollection implements ResultCollectionInterface
 {
     private iterable $data;
 
-    public function __construct(array $data)
+    public function __construct(iterable $data)
     {
-        $this->data = $data;
+        if ($data instanceof Traversable) {
+            $this->data = new IteratorIterator($data);
+        } else {
+            $this->data = $data;
+        }
     }
 
     /**
@@ -18,7 +25,7 @@ class ResultCollection implements ResultCollectionInterface
      */
     public function current()
     {
-        return current($this->data);
+        return is_array($this->data) ? current($this->data) : $this->data->current();
     }
 
     /**
@@ -26,7 +33,7 @@ class ResultCollection implements ResultCollectionInterface
      */
     public function next(): void
     {
-        next($this->data);
+        is_array($this->data) ? next($this->data) : $this->data->next();
     }
 
     /**
@@ -34,7 +41,7 @@ class ResultCollection implements ResultCollectionInterface
      */
     public function key()
     {
-        return key($this->data);
+        return is_array($this->data) ? key($this->data) : $this->data->key();
     }
 
     /**
@@ -42,7 +49,7 @@ class ResultCollection implements ResultCollectionInterface
      */
     public function valid(): bool
     {
-        return key($this->data) !== null;
+        return $this->key() !== null;
     }
 
     /**
@@ -50,6 +57,6 @@ class ResultCollection implements ResultCollectionInterface
      */
     public function rewind(): void
     {
-        reset($this->data);
+        is_array($this->data) ? reset($this->data) : $this->data->rewind();
     }
 }
