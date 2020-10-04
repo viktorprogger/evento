@@ -91,6 +91,10 @@ final class HandlerFactory
                 . ' instance or an array of callables and/or ' . Rule::class . ' instances'
         );
 
+        if (is_callable($conditions)) {
+            $conditions = $this->injector->invoke($conditions);
+        }
+
         if ($conditions instanceof Rules) {
             return $conditions;
         }
