@@ -8,27 +8,27 @@ use Yiisoft\Validator\Rule\Url;
 use Yiisoft\Validator\Rules;
 
 return [
-    'action' => [
-        'action2',
+    Action::class => [
+        Action2::class,
         [
-            'action' => 'action3',
+            'action' => Action3::class,
             'conditions' => new Rules(/* some rules here */),
         ],
         [
-            'action' => 'action4',
+            'action' => Action4::class,
             'conditions' => static fn () => new Rules(/* some rules here */),
         ],
         [
-            'action' => 'action5',
+            'action' => Action5::class,
             'conditions' => [
-                static fn ($payload, CustomDependency $dependency) => $dependency->suitesAction($payload),
+                static fn ($payload, CustomDependency $dependency): bool => $dependency->suitesAction($payload),
                 (new Url())->enableIDN(),
             ],
         ],
         [
-            'action' => 'action6',
+            'action' => Action6::class,
             '__class' => DeferredHandler::class,
         ],
-        static fn (): HandlerInterface => new CustomHandler(),
+        static fn (): HandlerInterface => new CustomHandler(new Action7()),
     ],
 ];
